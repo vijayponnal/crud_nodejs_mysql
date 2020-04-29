@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require('path');
 const express = require('express');
 const ejs = require('ejs');
@@ -5,10 +6,11 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const app = express();
 const connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'admin123',
-    database:'node_js_crud',
+        host:process.env.MYSQL_HOST,
+        port: process.env.MYSQL_PORT,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
 });
 
 connection.connect(function(error){
@@ -16,6 +18,7 @@ connection.connect(function(error){
     else console.log('Db connected succesfully ');
 });
 
+//use for bootstrap files in views .ejs files
 app.use(express.static(path.join(__dirname, 'public')));
 
 //set views file
@@ -69,16 +72,7 @@ let query = connection.query(sql,[userId],(err,results) =>{
 });
 
 
-//Update posted data inedit mode
-/*app.post('/update',(req,res) => {
-const userId = req.body.id;
-let sql="UPDATE users set name='"+req.body.name+"', email='"+req.body.email+"',phone_no='"+req.body.phone_no+"' where id='"+req.body.id;
-let query = connection.query(sql,(err,results)=>  {
-    if(err) throw err;
-    res.redirect('/');
-});
-});
-*/
+//update
 app.post('/update',(req,res) => {
 const userId = req.body.id;
 let sql='UPDATE users set name=?, email=?,phone_no=? where id=?';
@@ -98,10 +92,6 @@ let query = connection.query(sql,[userId],(err,results) =>{
 });
 });
 
-/*
-MIT@DESKTOP-GKQ9SRF MINGW64 /c/SriOS/htdocs/nodjscrud
-$ nodemon app
-*/
 //server listining
 app.listen(3000,() => {
     console.log('server running at post 3000');

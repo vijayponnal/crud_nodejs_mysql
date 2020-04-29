@@ -1,0 +1,5 @@
+MYSQL_HOST=hostname
+MYSQL_PORT=portnumber
+MYSQL_USER=username
+MYSQL_PASSWORD=password
+MYSQL_DATABASE=d

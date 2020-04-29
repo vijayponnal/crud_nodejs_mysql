@@ -14,5 +14,5 @@ git init
 git remote add origin https://github.com/vijayponnal/crud_nodejs_mysql.git
 git remote -v
 git add .
-git commit -m "first commit"
+git commit -m "first commit of crud nodejs"
 git push origin master
